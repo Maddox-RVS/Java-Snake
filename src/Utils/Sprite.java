@@ -1,25 +1,24 @@
+package Utils;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class Sprite extends JPanel {
+import Game.Constants;
+
+public class Sprite {
     private Image sprite;
     private BufferedImage buffImage;
     private JPanel panel;
-    private int width, height, x, y;
+    private int x, y, width, height;
     private String directory;
     private double rotation;
 
-    public Sprite(String imgFileName, int width, int height, int x, int y) {
-        this.width = width;
-        this.height = height;
+    public Sprite(String imgFileName, int x, int y) {
         this.x = x;
         this.y = y;
         rotation = 0.0;
@@ -29,34 +28,25 @@ public class Sprite extends JPanel {
         for (char letter:dirCharArr)
             dir += letter=='\\'?"/":letter;
         directory = dir + "/src/Content/" + imgFileName;
-        sprite = new ImageIcon(directory).getImage();
         
         loadBufferedImage();
         refreshPanel();
     }
 
-    public void rotate(double degrees) {
-        // BufferedImage rotatedImage = new BufferedImage(sprite.getWidth(null), sprite.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        // Graphics2D graphics2d = buffImage.createGraphics();
-        // int centerX = buffImage.getWidth(null)/2;
-        // int centerY = buffImage.getHeight(null)/2;
-        // graphics2d.rotate(Math.toRadians(degrees), centerX, centerY);
-        // graphics2d.drawImage(sprite, 0, 0, null);
-        // graphics2d.dispose();
-        // sprite = new ImageIcon(buffImage).getImage();
-        // buffImage = 
-        // refreshPanel();
-
-        // Graphics2D graphics2d = buffImage.createGraphics();
-        // int centerX = buffImage.getWidth(null)/2;
-        // int centerY = buffImage.getHeight(null)/2;
-        // graphics2d.rotate(Math.toRadians(degrees), centerX, centerY);
-        // graphics2d.drawImage(buffImage, null, centerX, centerY);
-        // graphics2d.dispose();
+    public void setRotation(double degrees) {
         rotation = degrees;
         refreshPanel();
     }
     public double getRotation() { return rotation; }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public Vector2D getPosition() { return new Vector2D(x, y); }
+
+    public int getWidth() { return buffImage.getWidth(); }
+    public int getHeight() { return  buffImage.getHeight(); }
 
     public void loadBufferedImage() { 
         try {
@@ -77,16 +67,11 @@ public class Sprite extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.rotate(Math.toRadians(rotation), buffImage.getWidth(), buffImage.getHeight());
+                g2.rotate(Math.toRadians(rotation), x+buffImage.getWidth()/2, y+buffImage.getHeight()/2);
                 g2.drawImage(buffImage, x, y, null);
             }
         };
     }
 
-    // @Override
-    // public void paintComponent(Graphics graphics) {
-    //     super.paintComponent(graphics);
-    //     graphics.drawImage(sprite, x, y, null);
-    // }
     public JPanel get() { return panel; }
 }

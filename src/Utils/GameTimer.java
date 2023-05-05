@@ -1,3 +1,7 @@
+package Utils;
+
+import Game.Constants;
+
 public class GameTimer {
     private final Constants.TimeUnit timeUnit;
     private final double loopTime;

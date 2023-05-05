@@ -1,3 +1,4 @@
+package Game;
 public class Constants {
     public static final Content content = new Content();
 

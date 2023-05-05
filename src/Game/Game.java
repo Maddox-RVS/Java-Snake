@@ -1,4 +1,9 @@
+package Game;
 import javax.swing.JFrame;
+
+import Utils.Sprite;
+import Utils.Window;
+import Utils.WindowConfiguration;
 
 public class Game {
     private final Window window;
@@ -7,7 +12,7 @@ public class Game {
     public Game() {
         window = new Window();
         configureWindow(window);
-        sprite = new Sprite("test.png", 100, 100, 100, 100);
+        sprite = new Sprite("test.png", 100, 100);
     }
 
     public void Initialize() {
@@ -15,7 +20,8 @@ public class Game {
     }
 
     public void Update() {
-        sprite.rotate(sprite.getRotation() + 1);
+        sprite.setRotation(sprite.getRotation() + 1);
+        sprite.setPosition((int) sprite.getPosition().getX() + 3, (int) sprite.getPosition().getY());
     }
 
     public void Draw() {
@@ -26,7 +32,7 @@ public class Game {
     public void configureWindow(Window window) {
         var config = new WindowConfiguration();
         config.setTitle("Example Window");
-        config.setSize(600, 400);
+        config.setSize(1000, 600);
         config.setLocation(100, 100);
         config.setVisible(true);
         config.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

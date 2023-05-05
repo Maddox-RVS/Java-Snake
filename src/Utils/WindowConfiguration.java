@@ -1,3 +1,4 @@
+package Utils;
 public class WindowConfiguration {
     private Integer width, height, x, y, defaultCloseOperation;
     private Boolean visible;
