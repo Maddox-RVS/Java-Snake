@@ -29,7 +29,7 @@ public class Window {
     }
 
     public Vector2D getSize() {
-        return (new Vector2D(window.getSize().getWidth(), window.getSize().height));
+        return (new Vector2D(window.getSize().getWidth(), window.getSize().getHeight()));
     }
 
     public double getWidth() { return window.getWidth(); }
@@ -37,6 +37,10 @@ public class Window {
 
     public Component add(Component comp) {
         return window.getContentPane().add(comp);
+    }
+
+    public void add(Keyboard keyboard) {
+        window.addKeyListener(keyboard);
     }
 
     public JFrame get() { return window; }
