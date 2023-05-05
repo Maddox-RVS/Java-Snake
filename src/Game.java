@@ -7,16 +7,20 @@ public class Game {
     public Game() {
         window = new Window();
         configureWindow(window);
-        sprite = new Sprite("test.png", 100, 100);
+        sprite = new Sprite("test.png", 100, 100, 100, 100);
+    }
+
+    public void Initialize() {
+        
     }
 
     public void Update() {
-        
+        sprite.rotate(sprite.getRotation() + 1);
     }
 
     public void Draw() {
         window.draw();
-        window.add(sprite);
+        window.add(sprite.get());
     }
 
     public void configureWindow(Window window) {
@@ -27,7 +31,7 @@ public class Game {
         config.setVisible(true);
         config.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         config.setRunWhenClosed(() -> {
-            System.out.println(Constants.content.DIRECTORY);
+            System.out.println("This is a test!");
         });
         config.configureAllSettings(window);
     }

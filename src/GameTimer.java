@@ -15,7 +15,7 @@ public class GameTimer {
 
     public void Start() {
         while (true) {
-            if (getGameLoopTimeElapsed() >= 20) Run();
+            if (getGameLoopTimeElapsed() >= loopTime) Run();
         }
     }
 
