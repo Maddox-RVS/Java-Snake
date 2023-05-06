@@ -5,26 +5,25 @@ import Utils.*;
 
 public class Game {
     private final Window window;
-<<<<<<< HEAD
     private final Sprite background;
-=======
-    private final Keyboard keyboard;
-    private Sprite sprite;
->>>>>>> game-framework
+    private Snake[] snake = new Snake[1]; 
 
     public Game() {
         window = new Window();
         background = new Sprite("Background.png", 750, 750, 0, 0);
         configureWindow(window);
+
+        snake[0] = new Snake(7, 7, Snake.BodyType.HEAD);
     }
 
     public void Update() {
-
+        for (Snake bodyPart:snake) bodyPart.Update();
     }
 
     public void Draw() {
         window.draw();
         window.add(background.get());
+        for (Snake bodyPart:snake) window.add(bodyPart.get());
     }
 
     public void configureWindow(Window window) {
