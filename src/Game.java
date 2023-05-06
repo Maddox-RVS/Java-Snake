@@ -1,17 +1,12 @@
 
 import javax.swing.JFrame;
 
-import Utils.Keyboard;
-import Utils.Sprite;
-import Utils.Window;
-import Utils.WindowConfiguration;
-import Utils.MathHelper;
+import Utils.*;
 
 public class Game {
     private final Window window;
     private final Keyboard keyboard;
     private Sprite sprite;
-    private int rotation = 0;
 
     public Game() {
         window = new Window();
