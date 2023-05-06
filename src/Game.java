@@ -5,11 +5,13 @@ import Utils.Keyboard;
 import Utils.Sprite;
 import Utils.Window;
 import Utils.WindowConfiguration;
+import Utils.MathHelper;
 
 public class Game {
     private final Window window;
     private final Keyboard keyboard;
     private Sprite sprite;
+    private int rotation = 0;
 
     public Game() {
         window = new Window();
@@ -41,8 +43,9 @@ public class Game {
         config.setTitle("Example Window");
         config.setSize(1000, 600);
         config.excludeInsets(true);
+        config.setResizable(true);
         config.setLocation(100, 100);
-        config.setVisible(true);
+        config.setVisible(true); //TODO Currently doesn't work because of window refresh, need to fix!
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         config.configureAllSettings(window);
     }

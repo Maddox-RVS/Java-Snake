@@ -1,15 +1,15 @@
 package Utils;
 public class WindowConfiguration {
     private Integer width, height, x, y, defaultCloseOperation;
-    private Boolean visible;
+    private Boolean visible, excludeInsets, resizable;
     private String title;
     private Runnable runWhenClosed;
-    private boolean excludeInsets;
 
     public void setSize(int width, int height) { this.width = width; this.height = height; }
     public void setWidth(int width) { this.width = width; }
     public void setHeight(int height) { this.height = height; }
     public void excludeInsets(boolean status) { excludeInsets = status; }
+    public void setResizable(boolean status) { resizable = status; }
     public void setLocation(int x, int y) { this.x = x; this.y = y; }
     public void setLocationX(int x) { this.x = x; }
     public void setLocationY(int y) { this.y = y; }
@@ -39,6 +39,7 @@ public class WindowConfiguration {
         if (visible != null) window.get().setVisible(visible);
         if (defaultCloseOperation != null) window.get().setDefaultCloseOperation(defaultCloseOperation); 
         if (title != null) window.get().setTitle(title);
+        if (resizable != null) window.get().setResizable(resizable);
         if (runWhenClosed != null) window.setRunWhenClosed(runWhenClosed);
     }
 }
