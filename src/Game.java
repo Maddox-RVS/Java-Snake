@@ -5,6 +5,7 @@ import Utils.Keyboard;
 import Utils.Sprite;
 import Utils.Window;
 import Utils.WindowConfiguration;
+import Utils.MathHelper;
 
 public class Game {
     private final Window window;
@@ -29,8 +30,10 @@ public class Game {
         var config = new WindowConfiguration();
         config.setTitle("Example Window");
         config.setSize(750, 750);
-        config.setLocation(400, 30);
-        config.setVisible(true);
+        config.excludeInsets(true);
+        config.setResizable(false);
+        config.setLocation(400, 10);
+        config.setVisible(true); //TODO Currently doesn't work because of window refresh, need to fix!
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         config.excludeInsets(true);
         config.configureAllSettings(window);
