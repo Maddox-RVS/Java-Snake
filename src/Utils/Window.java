@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class Window {
     private JFrame window;
-    private Runnable runWhenClosed;
+    private Runnable runWhenClosed = ()->{};
 
     public Window() {
         window = new JFrame();

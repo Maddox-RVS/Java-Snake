@@ -1,4 +1,4 @@
-package Game;
+
 import javax.swing.JFrame;
 
 import Utils.Keyboard;
@@ -15,17 +15,19 @@ public class Game {
         window = new Window();
         configureWindow(window);
         keyboard = new Keyboard();
-        sprite = new Sprite("test.png", 100, 100);
-    }
-
-    public void Initialize() {
-        
+        sprite = new Sprite("test.png", 100, 100, 100, 100);
     }
 
     public void Update() {
-        sprite.setRotation(sprite.getRotation() + 1);
-        sprite.setPosition((int) sprite.getPosition().getX() + 3, (int) sprite.getPosition().getY());
-        if (keyboard.isKeyDown("a")) System.out.println("A key is down!"); else System.out.println("A key isn't down!");
+        if (keyboard.isKeyDown("left"))
+            sprite.setPosition((int) sprite.getPosition().getX() - 6, (int) sprite.getPosition().getY());
+        else if (keyboard.isKeyDown("right"))
+            sprite.setPosition((int) sprite.getPosition().getX() + 6, (int) sprite.getPosition().getY());
+        else sprite.setHeight(100, Sprite.ScaleMode.CENTER);
+        if (keyboard.isKeyDown("up"))
+            sprite.setPosition((int) sprite.getPosition().getX(), (int) sprite.getPosition().getY() - 6);
+        else if (keyboard.isKeyDown("down"))
+            sprite.setPosition((int) sprite.getPosition().getX(), (int) sprite.getPosition().getY() + 6);
     }
 
     public void Draw() {
@@ -40,10 +42,7 @@ public class Game {
         config.setSize(1000, 600);
         config.setLocation(100, 100);
         config.setVisible(true);
-        config.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        config.setRunWhenClosed(() -> {
-            System.out.println("This is a test!");
-        });
+        config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         config.configureAllSettings(window);
     }
 }
