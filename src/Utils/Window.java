@@ -23,6 +23,11 @@ public class Window {
         });
     }
 
+    public enum Inset {
+        INCLUDE,
+        EXCLUDE
+    }
+
     public void draw() {
         window.repaint();
         window.setVisible(true); //TODO If set window visibility to false, this will instantly make it true again, fix it so that doesn't happen
@@ -32,8 +37,19 @@ public class Window {
         return (new Vector2D(window.getSize().getWidth(), window.getSize().getHeight()));
     }
 
-    public double getWidth() { return window.getWidth(); }
-    public double getHeight() { return window.getHeight(); }
+    public int getWidth() { return getWidth(Inset.INCLUDE); }
+    public int getWidth(Inset inset) { 
+        if (inset == Inset.INCLUDE)
+            return window.getWidth();
+        return window.getWidth() + window.getInsets().right + 7; 
+    }
+
+    public int getHeight() { return getHeight(Inset.INCLUDE); }
+    public int getHeight(Inset inset) {
+        if (inset == Inset.INCLUDE) 
+            return window.getHeight();
+        return window.getHeight() + window.getInsets().top + 7; 
+    }
 
     public Component add(Component comp) {
         return window.getContentPane().add(comp);
