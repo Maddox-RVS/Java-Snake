@@ -40,6 +40,7 @@ public class Game {
         var config = new WindowConfiguration();
         config.setTitle("Example Window");
         config.setSize(1000, 600);
+        config.excludeInsets(true);
         config.setLocation(100, 100);
         config.setVisible(true);
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
