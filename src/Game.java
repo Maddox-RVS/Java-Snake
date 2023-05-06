@@ -1,15 +1,16 @@
 
 import javax.swing.JFrame;
 
-import Utils.Keyboard;
-import Utils.Sprite;
-import Utils.Window;
-import Utils.WindowConfiguration;
-import Utils.MathHelper;
+import Utils.*;
 
 public class Game {
     private final Window window;
+<<<<<<< HEAD
     private final Sprite background;
+=======
+    private final Keyboard keyboard;
+    private Sprite sprite;
+>>>>>>> game-framework
 
     public Game() {
         window = new Window();
