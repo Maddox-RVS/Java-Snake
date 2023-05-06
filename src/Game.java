@@ -12,7 +12,7 @@ public class Game {
 
     public Game() {
         window = new Window();
-        background = new Sprite("Background.png", 100, 100, 100, 100);
+        background = new Sprite("Background.png", 750, 750, 0, 0);
         configureWindow(window);
     }
 
@@ -32,6 +32,7 @@ public class Game {
         config.setLocation(400, 30);
         config.setVisible(true);
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        config.excludeInsets(true);
         config.configureAllSettings(window);
     }
 }
