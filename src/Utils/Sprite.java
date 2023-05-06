@@ -118,7 +118,14 @@ public class Sprite {
 
     public void loadBufferedImage() { 
         try {
-            buffImage = ImageIO.read(new File(directory));
+            Image image = ImageIO.read(new File(directory));
+            buffImage = new BufferedImage(
+                image.getWidth(null), 
+                image.getHeight(null), 
+                BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = buffImage.createGraphics();
+            g2d.drawImage(image, 0, 0, null);
+            g2d.dispose();
         } catch (Exception e) {
             System.out.println("Failed to load -> " + directory);
         }
