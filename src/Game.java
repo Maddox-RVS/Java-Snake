@@ -1,18 +1,18 @@
-
 import javax.swing.JFrame;
-
 import Utils.*;
 
 public class Game {
     private final Window window;
     private final Keyboard keyboard;
     private Sprite sprite;
+    private Sprite sprite2;
 
     public Game() {
         window = new Window();
         configureWindow(window);
         keyboard = new Keyboard();
         sprite = new Sprite("test.png", 100, 100, 100, 100);
+        sprite2 = new Sprite("test.png", 100, 100, 400, 100);
     }
 
     public void Update() {
@@ -29,7 +29,10 @@ public class Game {
 
     public void Draw() {
         window.draw();
+        
         window.add(sprite.get());
+        window.add(sprite2.get());
+
         window.add(keyboard);
     }
 

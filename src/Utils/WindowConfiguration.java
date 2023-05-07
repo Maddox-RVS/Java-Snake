@@ -40,7 +40,6 @@ public class WindowConfiguration {
         if (defaultCloseOperation != null) window.get().setDefaultCloseOperation(defaultCloseOperation); 
         if (title != null) window.get().setTitle(title);
         if (resizable != null) window.get().setResizable(resizable);
-        if (excludeInsets != null) window.excludeInsets(excludeInsets);
         if (runWhenClosed != null) window.setRunWhenClosed(runWhenClosed);
     }
 }
