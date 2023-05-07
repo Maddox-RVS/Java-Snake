@@ -1,15 +1,26 @@
 package Utils;
-import javax.swing.JFrame;
 
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import java.awt.Canvas;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GraphicsConfigTemplate;
 import java.awt.event.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public class Window {
     private JFrame window;
+    private Canvas canvas = new Canvas();
     private Runnable runWhenClosed = ()->{};
 
     public Window() {
         window = new JFrame();
+        window.setLayout(null);
         window.setTitle("Window");
         window.setSize(300, 200);
         window.setLocation(100, 100);
@@ -21,6 +32,8 @@ public class Window {
                 System.exit(0);
             }
         });
+
+        window.add(canvas);
     }
 
     public enum Inset {

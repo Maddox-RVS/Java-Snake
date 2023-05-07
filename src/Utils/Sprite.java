@@ -7,12 +7,14 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import Constants.Constants;
 
 public class Sprite {
     private BufferedImage buffImage;
-    private JPanel panel;
+    private JLabel image;
     private int x, y, width, height;
     private String directory;
     private double rotation;
@@ -38,7 +40,7 @@ public class Sprite {
         loadBufferedImage();
         setWidth(width);
         setHeight(height);
-        refreshPanel();
+        this.image = new JLabel();
     }
 
     public void scale(double precentScale) {
@@ -131,22 +133,10 @@ public class Sprite {
         }
     }
 
-    public void refreshPanel() {
-        panel = new JPanel() {
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(buffImage.getWidth(), buffImage.getHeight());
-            }
-    
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.rotate(Math.toRadians(rotation), x+buffImage.getWidth()/2, y+buffImage.getHeight()/2);
-                g2d.drawImage(buffImage, x, y, null);
-            }
-        };
+    public JLabel get() { 
+        image.setIcon(new ImageIcon(buffImage));
+        image.setLocation(x, y);
+        image.setSize(width, height);
+        return image;
     }
-
-    public JPanel get() { return panel; }
 }
