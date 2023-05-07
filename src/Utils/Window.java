@@ -1,17 +1,9 @@
 package Utils;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import java.awt.Canvas;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GraphicsConfigTemplate;
 import java.awt.event.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Window {
     private JFrame window;

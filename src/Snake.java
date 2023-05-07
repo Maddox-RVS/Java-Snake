@@ -1,3 +1,4 @@
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Utils.*;
@@ -29,7 +30,7 @@ public class Snake {
 
     }
 
-    public JPanel get() {
+    public JLabel get() {
         return bodyTexture.get();
     }
 }
