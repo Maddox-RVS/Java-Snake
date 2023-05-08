@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import Utils.*;
+import Utils.GameTimer.TimeUnit;
 
 public class Game {
     private final Window window;
@@ -44,12 +45,14 @@ public class Game {
             right = false;
             up = false;
             down = true;
-        }
+        } 
+    }
 
+    public void moveSnake() {
         if (left) snake[0].setPosition((int) snake[0].getPosition().getX() - 50, (int) snake[0].getPosition().getY()); 
         else if (right) snake[0].setPosition((int) snake[0].getPosition().getX() + 50, (int) snake[0].getPosition().getY()); 
         else if (up) snake[0].setPosition((int) snake[0].getPosition().getX(), (int) snake[0].getPosition().getY() - 50); 
-        else if (down) snake[0].setPosition((int) snake[0].getPosition().getX(), (int) snake[0].getPosition().getY() + 50); 
+        else if (down) snake[0].setPosition((int) snake[0].getPosition().getX(), (int) snake[0].getPosition().getY() + 50);
     }
     
     public void Draw() {

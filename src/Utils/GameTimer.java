@@ -6,6 +6,8 @@ public class GameTimer {
     private final Runnable action;
     private final long universalStartTime;
     private long startTime;
+    private long singleMilliTime;
+    int count = 0;
 
     public GameTimer(TimeUnit timeUnit, double loopTime, Runnable action) {
         this.timeUnit = timeUnit;
@@ -22,9 +24,13 @@ public class GameTimer {
     }
 
     public void Start() {
-        while (true) {
+        while (true)
+            System.out.println(count);
+            if (getSingleMilliTimeElapsed() >= 1000) {
+                singleMilliTime = System.currentTimeMillis();
+                count++;
+            }
             if (getGameLoopTimeElapsed() >= loopTime) Run();
-        }
     }
 
     public void Run() {
@@ -44,6 +50,10 @@ public class GameTimer {
         else if (timeUnit == TimeUnit.SECONDS) return getSecondsElapsed(startTime);
         else if (timeUnit == TimeUnit.MINUTES) return getMinutesElapsed(startTime);
         return 0.0;
+    }
+
+    public double getSingleMilliTimeElapsed() {
+        return getMillisecondsElapsed(singleMilliTime);
     }
 
     public double getMillisecondsElapsed(long start) { return (double) (System.currentTimeMillis()-start); }

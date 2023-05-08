@@ -105,7 +105,6 @@ public class Sprite {
 
     public void setRotation(double degrees) {
         rotation = degrees;
-        refreshPanel();
     }
     public double getRotation() { return rotation; }
 
