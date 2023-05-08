@@ -62,10 +62,17 @@ public class Window {
         }
     }
 
+    public void add(Component comp, int layerDepth) {
+        if (window.getLayeredPane().getIndexOf(comp) == -1) {
+            window.getLayeredPane().add(comp, layerDepth);
+        }
+    }
+
     public void add(Keyboard keyboard) {
         window.addKeyListener(keyboard);
     }
 
+    public int getLayerDepth() { return layerDepth; }
     public JFrame get() { return window; }
     public JLayeredPane getLayeredPane() { return graphicsLayer; }
     public void setRunWhenClosed(Runnable runWhenClosed) { this.runWhenClosed = runWhenClosed; }

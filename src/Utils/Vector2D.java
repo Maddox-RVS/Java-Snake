@@ -8,6 +8,11 @@ public class Vector2D {
         this.y = y;
     }
 
+    public boolean equals(Vector2D obj) {
+        if (x == obj.getX() && y == obj.getY()) return true;
+        return false;
+    }
+
     public double getX() { return x; }
     public double getY() { return y; }
 

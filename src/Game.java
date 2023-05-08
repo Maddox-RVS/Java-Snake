@@ -1,16 +1,21 @@
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
+
+import Snake.Direction;
 import Utils.*;
+import Utils.Grid.Translate;
 
 public class Game {
     private final Window window;
     private final Keyboard keyboard;
     private final Sprite background;
+    private Snake.Direction snakeDirection;
     private final Timer updateSnakeMovement;
     private int snakeSpeed;
-    private Snake[] snake = new Snake[1]; 
-    private boolean right, left, up, down;
+    private ArrayList<Snake> snake = new ArrayList<Snake>();
+    private Food food;
 
     public Game() {
         window = new Window();
@@ -19,7 +24,7 @@ public class Game {
         configureWindow(window);
         window.add(keyboard);
         
-        snakeSpeed = 250;
+        snakeSpeed = 70;
         updateSnakeMovement = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -29,49 +34,81 @@ public class Game {
         };
         updateSnakeMovement.schedule(task, snakeSpeed, snakeSpeed*2);
 
-        snake[0] = new Snake(7, 7, Snake.BodyType.HEAD);
+        snake.add(new Snake(7, 7, Snake.BodyType.HEAD));
+        snake.get(0).setPosition((int) snake.get(0).getPosition().getX(), (int) snake.get(0).getPosition().getY());
+        snakeDirection = Snake.Direction.NONE;
+
+        food = new Food(0, 0);
+        placeFood();
     }
     
     public void Update() {
-        for (Snake bodyPart:snake) bodyPart.Update();
-
-        if (keyboard.wasKeyPressed("left") && !right) {
-            left = true;
-            right = false;
-            up = false;
-            down = false;
-        }
-        if (keyboard.wasKeyPressed("right") && !left) {
-            left = false;
-            right = true;
-            up = false;
-            down = false;
-        }
-        if (keyboard.wasKeyPressed("up") && !down) {
-            left = false;
-            right = false;
-            up = true;
-            down = false;
-        }
-        if (keyboard.wasKeyPressed("down") && !up) {
-            left = false;
-            right = false;
-            up = false;
-            down = true;
-        } 
-    }
-
-    public void moveSnake() {
-        if (left) snake[0].setPosition((int) snake[0].getPosition().getX() - 50, (int) snake[0].getPosition().getY()); 
-        else if (right) snake[0].setPosition((int) snake[0].getPosition().getX() + 50, (int) snake[0].getPosition().getY()); 
-        else if (up) snake[0].setPosition((int) snake[0].getPosition().getX(), (int) snake[0].getPosition().getY() - 50); 
-        else if (down) snake[0].setPosition((int) snake[0].getPosition().getX(), (int) snake[0].getPosition().getY() + 50);
+        checkEatenFood();
+        System.out.println(snake.size());
+        if (keyboard.wasKeyPressed("left") && snakeDirection != Snake.Direction.RIGHT) snakeDirection = Snake.Direction.LEFT;
+        if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
+        if (keyboard.wasKeyPressed("up") && snakeDirection != Snake.Direction.DOWN) snakeDirection = Snake.Direction.UP;
+        if (keyboard.wasKeyPressed("down") && snakeDirection != Snake.Direction.UP) snakeDirection = Snake.Direction.DOWN;
     }
     
     public void Draw() {
         window.draw();
         for (Snake bodyPart:snake) window.add(bodyPart.get());
-        window.add(background.get());
+        window.add(food.get());
+        window.add(background.get(), window.getLayerDepth() + 1);
+    }
+
+    public void checkEatenFood() {
+        if (snake.get(0).getPosition().equals(food.getPosition())) {
+            placeFood();
+            increaseSnakeLength();
+        }
+    }
+
+    public void placeFood() {
+        Vector2D foodPosition = generateFoodPosition();
+        food.setPosition((int) foodPosition.getX(), (int) foodPosition.getY());
+    }
+
+    public void moveSnake() {
+        if (snakeDirection == Snake.Direction.LEFT) 
+            snake.get(0).setPosition(
+                (int) snake.get(0).getPosition().getX() - 50, 
+                (int) snake.get(0).getPosition().getY()); 
+        else if (snakeDirection == Snake.Direction.RIGHT) 
+            snake.get(0).setPosition(
+                (int) snake.get(0).getPosition().getX() + 50, 
+                (int) snake.get(0).getPosition().getY()); 
+        else if (snakeDirection == Snake.Direction.UP) 
+            snake.get(0).setPosition(
+                (int) snake.get(0).getPosition().getX(), 
+                (int) snake.get(0).getPosition().getY() - 50); 
+        else if (snakeDirection == Snake.Direction.DOWN) 
+            snake.get(0).setPosition(
+                (int) snake.get(0).getPosition().getX(), 
+                (int) snake.get(0).getPosition().getY() + 50);
+
+        for (int i = 1; i < snake.size(); i++) {
+            snake.get(i).setPosition(
+                (int) snake.get(i-1).getLastPosition().getX(),
+                (int) snake.get(i-1).getLastPosition().getY()
+            );
+        }
+    }
+
+    public void increaseSnakeLength() {
+        snake.add(new Snake(
+            (int) snake.get(snake.size()-1).getLastPosition().getX(), 
+            (int) snake.get(snake.size()-1).getLastPosition().getY(), 
+            Snake.BodyType.LINE_BODY));
+    }
+    
+    public Vector2D generateFoodPosition() {
+        int x = MathHelper.random(0, 14); 
+        int y = MathHelper.random(0, 14);
+        for (Snake bodyPart:snake) 
+            if (x == bodyPart.getPosition().getX() && y == bodyPart.getPosition().getY()) return generateFoodPosition();
+        return new Vector2D(x, y);
     }
 
     public void configureWindow(Window window) {
