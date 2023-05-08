@@ -81,7 +81,7 @@ public class Game {
         config.excludeInsets(true);
         config.setResizable(false);
         config.setLocation(400, 10);
-        config.setVisible(true); //TODO Currently doesn't work because of window refresh, need to fix!
+        config.setVisible(true);
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         config.excludeInsets(true);
         config.configureAllSettings(window);

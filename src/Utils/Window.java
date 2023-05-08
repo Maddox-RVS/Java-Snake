@@ -1,16 +1,18 @@
 package Utils;
 
 import javax.swing.JFrame;
-import java.awt.Canvas;
+import javax.swing.JLayeredPane;
 import java.awt.Component;
 import java.awt.event.*;
 
 public class Window {
     private JFrame window;
-    private Canvas canvas = new Canvas();
+    private JLayeredPane graphicsLayer;
     private Runnable runWhenClosed = ()->{};
-
+    private int layerDepth;
+    
     public Window() {
+        layerDepth = 0;
         window = new JFrame();
         window.setLayout(null);
         window.setTitle("Window");
@@ -24,8 +26,6 @@ public class Window {
                 System.exit(0);
             }
         });
-
-        window.add(canvas);
     }
 
     public enum Inset {
@@ -35,7 +35,6 @@ public class Window {
 
     public void draw() {
         window.repaint();
-        window.setVisible(true); //TODO If set window visibility to false, this will instantly make it true again, fix it so that doesn't happen
     }
 
     public Vector2D getSize() {
@@ -56,8 +55,11 @@ public class Window {
         return window.getHeight() + window.getInsets().top + 7; 
     }
 
-    public Component add(Component comp) {
-        return window.getContentPane().add(comp);
+    public void add(Component comp) {
+        if (window.getLayeredPane().getIndexOf(comp) == -1) {
+            window.getLayeredPane().add(comp, layerDepth);
+            layerDepth++;
+        }
     }
 
     public void add(Keyboard keyboard) {
@@ -65,5 +67,6 @@ public class Window {
     }
 
     public JFrame get() { return window; }
+    public JLayeredPane getLayeredPane() { return graphicsLayer; }
     public void setRunWhenClosed(Runnable runWhenClosed) { this.runWhenClosed = runWhenClosed; }
 }
