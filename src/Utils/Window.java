@@ -1,24 +1,18 @@
 package Utils;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import java.awt.Canvas;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GraphicsConfigTemplate;
 import java.awt.event.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Window {
     private JFrame window;
-    private Canvas canvas = new Canvas();
+    private JLayeredPane graphicsLayer;
     private Runnable runWhenClosed = ()->{};
-
+    private int layerDepth;
+    
     public Window() {
+        layerDepth = 0;
         window = new JFrame();
         window.setLayout(null);
         window.setTitle("Window");
@@ -32,8 +26,6 @@ public class Window {
                 System.exit(0);
             }
         });
-
-        window.add(canvas);
     }
 
     public enum Inset {
@@ -64,8 +56,11 @@ public class Window {
         return window.getHeight() + window.getInsets().top + 7; 
     }
 
-    public Component add(Component comp) {
-        return window.getContentPane().add(comp);
+    public void add(Component comp) {
+        if (window.getLayeredPane().getIndexOf(comp) == -1) {
+            window.getLayeredPane().add(comp, layerDepth);
+            layerDepth++;
+        }
     }
 
     public void add(Keyboard keyboard) {
@@ -73,5 +68,6 @@ public class Window {
     }
 
     public JFrame get() { return window; }
+    public JLayeredPane getLayeredPane() { return graphicsLayer; }
     public void setRunWhenClosed(Runnable runWhenClosed) { this.runWhenClosed = runWhenClosed; }
 }

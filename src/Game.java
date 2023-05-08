@@ -5,14 +5,14 @@ public class Game {
     private final Window window;
     private final Keyboard keyboard;
     private Sprite sprite;
-    private Sprite sprite2;
+    private Sprite background;
 
     public Game() {
         window = new Window();
         configureWindow(window);
         keyboard = new Keyboard();
         sprite = new Sprite("test.png", 100, 100, 100, 100);
-        sprite2 = new Sprite("test.png", 100, 100, 400, 100);
+        background = new Sprite("Background.png", 750, 750, 0, 0);
     }
 
     public void Update() {
@@ -31,7 +31,7 @@ public class Game {
         window.draw();
         
         window.add(sprite.get());
-        window.add(sprite2.get());
+        window.add(background.get());
 
         window.add(keyboard);
     }
@@ -39,10 +39,10 @@ public class Game {
     public void configureWindow(Window window) {
         var config = new WindowConfiguration();
         config.setTitle("Example Window");
-        config.setSize(1000, 600);
+        config.setSize(750, 750);
         config.excludeInsets(true);
         config.setResizable(true);
-        config.setLocation(100, 100);
+        config.setLocation(400, 20);
         config.setVisible(true); //TODO Currently doesn't work because of window refresh, need to fix!
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         config.configureAllSettings(window);
