@@ -35,7 +35,6 @@ public class Window {
 
     public void draw() {
         window.repaint();
-        window.setVisible(true); //TODO If set window visibility to false, this will instantly make it true again, fix it so that doesn't happen
     }
 
     public Vector2D getSize() {
