@@ -1,11 +1,14 @@
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JFrame;
 import Utils.*;
-import Utils.GameTimer.TimeUnit;
 
 public class Game {
     private final Window window;
     private final Keyboard keyboard;
     private final Sprite background;
+    private final Timer updateSnakeMovement;
+    private int snakeSpeed;
     private Snake[] snake = new Snake[1]; 
     private boolean right, left, up, down;
 
@@ -16,6 +19,16 @@ public class Game {
         configureWindow(window);
         window.add(keyboard);
         
+        snakeSpeed = 250;
+        updateSnakeMovement = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                moveSnake();
+            }
+        };
+        updateSnakeMovement.schedule(task, snakeSpeed, snakeSpeed*2);
+
         snake[0] = new Snake(7, 7, Snake.BodyType.HEAD);
     }
     
