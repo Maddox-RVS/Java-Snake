@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
+
 import javax.swing.JFrame;
 
 import Snake.Direction;
@@ -10,6 +12,7 @@ import Utils.Grid.Translate;
 public class Game {
     private final Window window;
     private final Keyboard keyboard;
+    private Grid grid;
     private final Sprite background;
     private Snake.Direction snakeDirection;
     private final Timer updateSnakeMovement;
@@ -20,6 +23,7 @@ public class Game {
     public Game() {
         window = new Window();
         keyboard = new Keyboard();
+        grid = new Grid(50, 50);
         background = new Sprite("Background.png", 750, 750, 0, 0);
         configureWindow(window);
         window.add(keyboard);
@@ -44,7 +48,8 @@ public class Game {
     
     public void Update() {
         checkEatenFood();
-        System.out.println(snake.size());
+        checkCollideWall();
+
         if (keyboard.wasKeyPressed("left") && snakeDirection != Snake.Direction.RIGHT) snakeDirection = Snake.Direction.LEFT;
         if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
         if (keyboard.wasKeyPressed("up") && snakeDirection != Snake.Direction.DOWN) snakeDirection = Snake.Direction.UP;
@@ -56,6 +61,15 @@ public class Game {
         for (Snake bodyPart:snake) window.add(bodyPart.get());
         window.add(food.get());
         window.add(background.get(), window.getLayerDepth() + 1);
+    }
+
+    public void checkCollideWall() {
+        if (snake.get(0).getPosition().getX() < 0 || 
+            snake.get(0).getPosition().getX() > window.getWidth() - snake.get(0).get().getWidth())
+            endGame();
+        if (snake.get(0).getPosition().getY() < 0 || 
+            snake.get(0).getPosition().getY() > window.getHeight() - snake.get(0).get().getHeight())
+            endGame();
     }
 
     public void checkEatenFood() {
@@ -107,8 +121,15 @@ public class Game {
         int x = MathHelper.random(0, 14); 
         int y = MathHelper.random(0, 14);
         for (Snake bodyPart:snake) 
-            if (x == bodyPart.getPosition().getX() && y == bodyPart.getPosition().getY()) return generateFoodPosition();
+            if (bodyPart.getPosition().equals(new Vector2D(
+                grid.get(x, y, Grid.Translate.FROM_GRID).getX(), 
+                grid.get(x, y, Grid.Translate.FROM_GRID).getY()))) 
+                    return generateFoodPosition();
         return new Vector2D(x, y);
+    }
+
+    public void endGame() {
+        System.exit(0);
     }
 
     public void configureWindow(Window window) {
