@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
-
 import javax.swing.JFrame;
-
-import Snake.Direction;
 import Utils.*;
 import Utils.Grid.Translate;
 
@@ -122,8 +118,8 @@ public class Game {
         int y = MathHelper.random(0, 14);
         for (Snake bodyPart:snake) 
             if (bodyPart.getPosition().equals(new Vector2D(
-                grid.get(x, y, Grid.Translate.FROM_GRID).getX(), 
-                grid.get(x, y, Grid.Translate.FROM_GRID).getY()))) 
+                grid.get(x, y, Translate.FROM_GRID).getX(), 
+                grid.get(x, y, Translate.FROM_GRID).getY()))) 
                     return generateFoodPosition();
         return new Vector2D(x, y);
     }
