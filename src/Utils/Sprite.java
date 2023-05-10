@@ -71,7 +71,7 @@ public class Sprite {
 
     public void setWidth(int width) { setWidth(width, ScaleMode.CORNER); }
     public void setWidth(int width, ScaleMode scaleMode) {
-        Image tempImage = buffImage.getScaledInstance(width, height, BufferedImage.SCALE_FAST);
+        Image tempImage = buffImage.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH);
         BufferedImage scaledImage = new BufferedImage(width, height, buffImage.getType());
         Graphics2D g2d = scaledImage.createGraphics();
         g2d.drawImage(tempImage, 0, 0, null);
@@ -88,7 +88,7 @@ public class Sprite {
 
     public void setHeight(int height) { setHeight(height, ScaleMode.CORNER); }
     public void setHeight(int height, ScaleMode scaleMode) {
-        Image tempImage = buffImage.getScaledInstance(width, height, BufferedImage.SCALE_FAST);
+        Image tempImage = buffImage.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH);
         BufferedImage scaledImage = new BufferedImage(width, height, buffImage.getType());
         Graphics2D g2d = scaledImage.createGraphics();
         g2d.drawImage(tempImage, 0, 0, null);
