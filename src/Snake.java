@@ -14,6 +14,7 @@ public class Snake {
         x = (int) grid.get(x, y, Translate.FROM_GRID).getX();
         y = (int) grid.get(x, y, Translate.FROM_GRID).getY();
         bodyTexture = new Sprite("SnakePlaceholder.png", 50, 50, x, y);
+        bodyTexture.setTexture("SnakeHead.png");
     }
 
     public enum BodyType {
