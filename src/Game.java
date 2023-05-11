@@ -1,4 +1,6 @@
 import javax.swing.JFrame;
+
+import Constants.Constants;
 import Utils.*;
 
 public class Game {
