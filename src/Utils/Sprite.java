@@ -4,9 +4,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFileFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +20,6 @@ public class Sprite {
     private JLabel image;
     private int x, y, width, height;
     private String directory;
-    private double rotation;
 
     public enum ScaleMode {
         CORNER,
@@ -29,7 +31,6 @@ public class Sprite {
         this.height = height;
         this.x = x;
         this.y = y;
-        rotation = 0.0;
 
         String dir = "";
         char[] dirCharArr = Constants.content.DIRECTORY.toCharArray();
@@ -47,7 +48,7 @@ public class Sprite {
         Image tempImage = buffImage.getScaledInstance(
             (int) ((double) (width*precentScale)), 
             (int) ((double) (height*precentScale)), 
-            BufferedImage.SCALE_FAST);
+            BufferedImage.SCALE_SMOOTH);
         BufferedImage scaledImage = new BufferedImage(
             (int) ((double) (width*precentScale)), 
             (int) ((double) (height*precentScale)), 
@@ -103,11 +104,6 @@ public class Sprite {
         this.height = height;
     }
 
-    public void setRotation(double degrees) {
-        rotation = degrees;
-    }
-    public double getRotation() { return rotation; }
-
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -134,8 +130,10 @@ public class Sprite {
 
     public JLabel get() { 
         image.setIcon(new ImageIcon(buffImage));
+        image.setLayout(null);
         image.setLocation(x, y);
         image.setSize(width, height);
+
         return image;
     }
 }

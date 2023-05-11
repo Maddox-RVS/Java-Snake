@@ -73,6 +73,10 @@ public class Window {
     }
 
     public int getLayerDepth() { return layerDepth; }
+<<<<<<< HEAD
+=======
+
+>>>>>>> game-framework
     public JFrame get() { return window; }
     public JLayeredPane getLayeredPane() { return graphicsLayer; }
     public void setRunWhenClosed(Runnable runWhenClosed) { this.runWhenClosed = runWhenClosed; }
