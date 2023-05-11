@@ -14,6 +14,7 @@ public class Game {
         configureWindow(window);
         keyboard = new Keyboard();
         sprite = new Sprite("test.png", 100, 100, 100, 100);
+        sprite.setTexture("Background.png");
         background = new Sprite("Background.png", 750, 750, 0, 0);
     }
 

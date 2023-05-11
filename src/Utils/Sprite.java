@@ -36,9 +36,9 @@ public class Sprite {
         char[] dirCharArr = Constants.content.DIRECTORY.toCharArray();
         for (char letter:dirCharArr)
             dir += letter=='\\'?"/":letter;
-        directory = dir + "/src/Content/" + imgFileName;
+        directory = dir + "/src/Content/";
         
-        loadBufferedImage();
+        loadBufferedImage(imgFileName);
         setWidth(width);
         setHeight(height);
         this.image = new JLabel();
@@ -113,9 +113,9 @@ public class Sprite {
     public int getWidth() { return buffImage.getWidth(); }
     public int getHeight() { return  buffImage.getHeight(); }
 
-    public void loadBufferedImage() { 
+    public void loadBufferedImage(String imgFileName) { 
         try {
-            Image image = ImageIO.read(new File(directory));
+            Image image = ImageIO.read(new File(directory + imgFileName));
             buffImage = new BufferedImage(
                 image.getWidth(null), 
                 image.getHeight(null), 
@@ -126,6 +126,12 @@ public class Sprite {
         } catch (Exception e) {
             System.out.println("Failed to load -> " + directory);
         }
+    }
+
+    public void setTexture(String imgFileName) {
+        loadBufferedImage(imgFileName);
+        setWidth(width);
+        setHeight(height);
     }
 
     public JLabel get() { 
