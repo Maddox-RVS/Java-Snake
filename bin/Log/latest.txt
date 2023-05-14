@@ -1,0 +1,6 @@
+[Init] New log file created
+[Init] Initializing game loop
+[Init] Initializing time units
+[Init] Initializing runnable action Update and Draw
+[Init] Finished loop initialization
+[Init] Starting loop

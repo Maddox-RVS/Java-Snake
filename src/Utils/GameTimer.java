@@ -11,7 +11,9 @@ public class GameTimer {
         this.timeUnit = timeUnit;
         universalStartTime = System.currentTimeMillis();
         this.loopTime = loopTime;
+        Logger.write("[Init] Initializing time units");
         this.action = action;
+        Logger.write("[Init] Initializing runnable action Update and Draw");
         Start();
     }
 
@@ -22,8 +24,10 @@ public class GameTimer {
     }
 
     public void Start() {
-        while (true)
-            if (getGameLoopTimeElapsed() >= loopTime) Run();
+        Logger.write("[Init] Finished loop initialization\n[Init] Starting loop");
+        while (true) {
+            if (getGameLoopTimeElapsed() >= loopTime) Run(); 
+        }
     }
 
     public void Run() {
