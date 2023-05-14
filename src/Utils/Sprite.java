@@ -1,18 +1,12 @@
 package Utils;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioFileFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import Constants.Constants;
 
 public class Sprite {
@@ -33,7 +27,7 @@ public class Sprite {
         this.y = y;
 
         String dir = "";
-        char[] dirCharArr = Constants.content.DIRECTORY.toCharArray();
+        char[] dirCharArr = Constants.DIRECTORY.toCharArray();
         for (char letter:dirCharArr)
             dir += letter=='\\'?"/":letter;
         directory = dir + "/src/Content/";
@@ -124,7 +118,7 @@ public class Sprite {
             g2d.drawImage(image, 0, 0, null);
             g2d.dispose();
         } catch (Exception e) {
-            System.out.println("Failed to load -> " + directory);
+            Logger.write("[ERROR] Failed to load -> " + directory + "/" + imgFileName, e.getMessage(), e);
         }
     }
 

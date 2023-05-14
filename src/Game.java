@@ -1,6 +1,5 @@
 import javax.swing.JFrame;
 
-import Constants.Constants;
 import Utils.*;
 
 public class Game {
@@ -13,8 +12,7 @@ public class Game {
         window = new Window();
         configureWindow(window);
         keyboard = new Keyboard();
-        sprite = new Sprite("test.png", 100, 100, 100, 100);
-        sprite.setTexture("Background.png");
+        sprite = new Sprite("test2.png", 100, 100, 100, 100);
         background = new Sprite("Background.png", 750, 750, 0, 0);
     }
 
