@@ -3,6 +3,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 
+import Snake.Direction;
 import Utils.*;
 import Utils.Grid.Translate;
 
@@ -25,6 +26,10 @@ public class Game {
         configureWindow(window);
         window.add(keyboard);
         
+        snake.add(new Snake(7, 7, Snake.BodyType.HEAD));
+        snake.get(0).setPosition((int) snake.get(0).getPosition().getX(), (int) snake.get(0).getPosition().getY());
+        snakeDirection = Snake.Direction.NONE;
+
         snakeSpeed = 70;
         updateSnakeMovement = new Timer();
         TimerTask task = new TimerTask() {
@@ -35,9 +40,6 @@ public class Game {
         };
         updateSnakeMovement.schedule(task, snakeSpeed, snakeSpeed*2);
 
-        snake.add(new Snake(7, 7, Snake.BodyType.HEAD));
-        snake.get(0).setPosition((int) snake.get(0).getPosition().getX(), (int) snake.get(0).getPosition().getY());
-        snakeDirection = Snake.Direction.NONE;
 
         food = new Food(0, 0);
         placeFood();
@@ -82,42 +84,101 @@ public class Game {
     }
     
     public void moveHead(Snake.Direction direction) {
-        if (direction == Snake.Direction.LEFT) {
+        snake.get(0).setLastDirection(snake.get(0).getDirection());
+        if (direction == Snake.Direction.LEFT)
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX() - 50, 
                 (int) snake.get(0).getPosition().getY()); 
-                snake.get(0).setDirection(direction);
-        }
-        else if (direction == Snake.Direction.RIGHT) {
+        else if (direction == Snake.Direction.RIGHT)
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX() + 50, 
                 (int) snake.get(0).getPosition().getY());
-                snake.get(0).setDirection(direction); 
-        }
-        else if (direction == Snake.Direction.UP) {
+        else if (direction == Snake.Direction.UP)
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX(), 
                 (int) snake.get(0).getPosition().getY() - 50);
-                snake.get(0).setDirection(direction); 
-        }
-        else if (direction == Snake.Direction.DOWN) {
+        else if (direction == Snake.Direction.DOWN)
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX(), 
                 (int) snake.get(0).getPosition().getY() + 50);
-                snake.get(0).setDirection(direction);
-        }
+        snake.get(0).setDirection(direction);
     }
 
     public void moveSnake() {
         moveHead(snakeDirection);
+
         for (int i = 1; i < snake.size(); i++) {
             snake.get(i).setPosition(
                 (int) snake.get(i-1).getLastPosition().getX(),
                 (int) snake.get(i-1).getLastPosition().getY()
             );
-            snake.get(i).setDirection(snake.get(i-1).getDirection());
+            snake.get(i).setLastDirection(snake.get(i).getDirection());
+            snake.get(i).setDirection(snake.get(i-1).getLastDirection());
+
+            if (i != snake.size()-1) {
+                if (snake.get(i-1).getDirection() != snake.get(i).getDirection()) {
+                    if (snake.get(i-1).getDirection() == Snake.Direction.LEFT 
+                            && snake.get(i).getDirection() == Snake.Direction.UP) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                        snake.get(i).setRotation(Sprite.Rotate.RIGHT);
+                    }
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.LEFT 
+                            && snake.get(i).getDirection() == Snake.Direction.DOWN) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                        snake.get(i).setRotation(Sprite.Rotate.DOWN);
+                    } 
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.RIGHT 
+                            && snake.get(i).getDirection() == Snake.Direction.UP) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                    }
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.RIGHT 
+                            && snake.get(i).getDirection() == Snake.Direction.DOWN) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                        snake.get(i).setRotation(Sprite.Rotate.LEFT);
+                    }
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.UP 
+                            && snake.get(i).getDirection() == Snake.Direction.LEFT) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                        snake.get(i).setRotation(Sprite.Rotate.LEFT);
+                    }
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.UP 
+                            && snake.get(i).getDirection() == Snake.Direction.RIGHT) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                        snake.get(i).setRotation(Sprite.Rotate.DOWN);
+                    }
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.DOWN 
+                            && snake.get(i).getDirection() == Snake.Direction.LEFT) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                    }
+                    else if (snake.get(i-1).getDirection() == Snake.Direction.DOWN 
+                            && snake.get(i).getDirection() == Snake.Direction.RIGHT) {
+                        snake.get(i).setTexture("SnakeCorner.png");
+                        snake.get(i).setRotation(Sprite.Rotate.RIGHT);
+                    }
+                }
+                else {
+                    snake.get(i).setTexture("SnakeLine.png");
+                    if (snake.get(i).getDirection() == Snake.Direction.DOWN) snake.get(i).setRotation(Sprite.Rotate.DOWN);
+                    else if (snake.get(i).getDirection() == Snake.Direction.LEFT) snake.get(i).setRotation(Sprite.Rotate.LEFT);
+                    else if (snake.get(i).getDirection() == Snake.Direction.RIGHT) snake.get(i).setRotation(Sprite.Rotate.RIGHT);
+                }
+            }
+
+            if (snake.size() > 1) {
+                snake.get(snake.size()-1).setTexture("SnakeHead.png");
+        
+                if (snake.get(snake.size()-2).getDirection() == Snake.Direction.UP) snake.get(snake.size()-1).setRotation(Sprite.Rotate.DOWN);
+                else if (snake.get(snake.size()-2).getDirection() == Snake.Direction.DOWN) snake.get(snake.size()-1).setRotation(Sprite.Rotate.UP);
+                else if (snake.get(snake.size()-2).getDirection() == Snake.Direction.LEFT) snake.get(snake.size()-1).setRotation(Sprite.Rotate.RIGHT);
+                else if (snake.get(snake.size()-2).getDirection() == Snake.Direction.RIGHT) snake.get(snake.size()-1).setRotation(Sprite.Rotate.LEFT);
+            }
         }
-        for (Snake bodyPart:snake) bodyPart.rotate();
+        if (snake.size() == 1) snake.get(0).setTexture("SnakeAlone.png");
+        else snake.get(0).setTexture("SnakeHead.png");
+        if (snake.get(0).getDirection() == Snake.Direction.UP) snake.get(0).setRotation(Sprite.Rotate.UP);
+        else if (snake.get(0).getDirection() == Snake.Direction.DOWN) snake.get(0).setRotation(Sprite.Rotate.DOWN);
+        else if (snake.get(0).getDirection() == Snake.Direction.LEFT) snake.get(0).setRotation(Sprite.Rotate.LEFT);
+        else if (snake.get(0).getDirection() == Snake.Direction.RIGHT) snake.get(0).setRotation(Sprite.Rotate.RIGHT);
     }
 
     public void increaseSnakeLength() {
