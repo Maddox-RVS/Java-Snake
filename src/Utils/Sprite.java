@@ -14,10 +14,18 @@ public class Sprite {
     private JLabel image;
     private int x, y, width, height;
     private String directory;
+    private Rotate rotation;
 
     public enum ScaleMode {
         CORNER,
         CENTER
+    }
+
+    public enum Rotate {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 
     public Sprite(String imgFileName, int width, int height, int x, int y) {
@@ -106,6 +114,35 @@ public class Sprite {
 
     public int getWidth() { return buffImage.getWidth(); }
     public int getHeight() { return  buffImage.getHeight(); }
+
+    public Rotate getRotation() { return rotation; }
+    public void setRotation(Rotate rotation) {
+        BufferedImage rotatedImage = new BufferedImage(
+            buffImage.getWidth(), 
+            buffImage.getHeight(), 
+            buffImage.getType());
+        Graphics2D graphics = rotatedImage.createGraphics();
+        if (rotation == Rotate.UP) graphics.rotate(
+            Math.toRadians(0), 
+            buffImage.getWidth()/2, 
+            buffImage.getHeight()/2);
+        else if (rotation == Rotate.DOWN) graphics.rotate(
+            Math.toRadians(180), 
+            buffImage.getWidth()/2, 
+            buffImage.getHeight()/2);
+        else if (rotation == Rotate.LEFT) graphics.rotate(
+            Math.toRadians(270), 
+            buffImage.getWidth()/2, 
+            buffImage.getHeight()/2);
+        else if (rotation == Rotate.RIGHT) graphics.rotate(
+            Math.toRadians(90), 
+            buffImage.getWidth()/2, 
+            buffImage.getHeight()/2); 
+        graphics.drawImage(buffImage, null, 0, 0);
+        graphics.dispose();
+        buffImage = rotatedImage;
+        this.rotation = rotation;
+    }
 
     public void loadBufferedImage(String imgFileName) { 
         try {
