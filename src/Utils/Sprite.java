@@ -42,11 +42,11 @@ public class Sprite {
         directory = dir + "/src/Content/";
         
         loadBufferedImage(imgFileName);
+        setWidth(width);
+        setHeight(height);
         universalBuffImage = new BufferedImage(buffImage.getWidth(), buffImage.getHeight(), buffImage.getType());
         Graphics2D graphics = universalBuffImage.createGraphics();
         graphics.drawImage(buffImage, null, 0, 0);
-        setWidth(width);
-        setHeight(height);
         this.image = new JLabel();
     }
 
@@ -167,6 +167,7 @@ public class Sprite {
         loadBufferedImage(imgFileName);
         setWidth(width);
         setHeight(height);
+        universalBuffImage = new BufferedImage(buffImage.getWidth(), buffImage.getHeight(), buffImage.getType());
         Graphics2D graphics = universalBuffImage.createGraphics();
             graphics.drawImage(buffImage, null, 0, 0);
             graphics.dispose();

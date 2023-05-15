@@ -48,9 +48,9 @@ public class Game {
         checkCollideWall();
 
         if (keyboard.wasKeyPressed("left") && snakeDirection != Snake.Direction.RIGHT) snakeDirection = Snake.Direction.LEFT;
-        if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
-        if (keyboard.wasKeyPressed("up") && snakeDirection != Snake.Direction.DOWN) snakeDirection = Snake.Direction.UP;
-        if (keyboard.wasKeyPressed("down") && snakeDirection != Snake.Direction.UP) snakeDirection = Snake.Direction.DOWN;
+        else if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
+        else if (keyboard.wasKeyPressed("up") && snakeDirection != Snake.Direction.DOWN) snakeDirection = Snake.Direction.UP;
+        else if (keyboard.wasKeyPressed("down") && snakeDirection != Snake.Direction.UP) snakeDirection = Snake.Direction.DOWN;
     }
     
     public void Draw() {
@@ -117,7 +117,7 @@ public class Game {
             );
             snake.get(i).setDirection(snake.get(i-1).getDirection());
         }
-        // for (Snake bodyPart:snake) bodyPart.rotate();
+        for (Snake bodyPart:snake) bodyPart.rotate();
     }
 
     public void increaseSnakeLength() {

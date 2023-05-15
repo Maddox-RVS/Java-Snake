@@ -44,10 +44,10 @@ public class Snake {
     }
 
     public void rotate() {
-        if (direction == Snake.Direction.LEFT) { bodyTexture.setRotation(Sprite.Rotate.LEFT); Logger.write("Left"); }
-        else if (direction == Snake.Direction.RIGHT) { bodyTexture.setRotation(Sprite.Rotate.RIGHT); Logger.write("Right"); }
-        else if (direction == Snake.Direction.UP) { bodyTexture.setRotation(Sprite.Rotate.UP); Logger.write("Up"); }
-        else if (direction == Snake.Direction.DOWN) { bodyTexture.setRotation(Sprite.Rotate.DOWN); Logger.write("Down"); }
+        if (direction == Snake.Direction.LEFT) bodyTexture.setRotation(Sprite.Rotate.LEFT);
+        else if (direction == Snake.Direction.RIGHT) bodyTexture.setRotation(Sprite.Rotate.RIGHT);
+        else if (direction == Snake.Direction.UP) bodyTexture.setRotation(Sprite.Rotate.UP);
+        else if (direction == Snake.Direction.DOWN) bodyTexture.setRotation(Sprite.Rotate.DOWN);
     }
     
     public void setDirection(Snake.Direction direction) { this.direction = direction; }
