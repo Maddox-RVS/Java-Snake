@@ -80,31 +80,44 @@ public class Game {
         Vector2D foodPosition = generateFoodPosition();
         food.setPosition((int) foodPosition.getX(), (int) foodPosition.getY());
     }
-
-    public void moveSnake() {
-        if (snakeDirection == Snake.Direction.LEFT) 
+    
+    public void moveHead(Snake.Direction direction) {
+        if (direction == Snake.Direction.LEFT) {
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX() - 50, 
                 (int) snake.get(0).getPosition().getY()); 
-        else if (snakeDirection == Snake.Direction.RIGHT) 
+                snake.get(0).setDirection(direction);
+        }
+        else if (direction == Snake.Direction.RIGHT) {
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX() + 50, 
-                (int) snake.get(0).getPosition().getY()); 
-        else if (snakeDirection == Snake.Direction.UP) 
+                (int) snake.get(0).getPosition().getY());
+                snake.get(0).setDirection(direction); 
+        }
+        else if (direction == Snake.Direction.UP) {
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX(), 
-                (int) snake.get(0).getPosition().getY() - 50); 
-        else if (snakeDirection == Snake.Direction.DOWN) 
+                (int) snake.get(0).getPosition().getY() - 50);
+                snake.get(0).setDirection(direction); 
+        }
+        else if (direction == Snake.Direction.DOWN) {
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX(), 
                 (int) snake.get(0).getPosition().getY() + 50);
+                snake.get(0).setDirection(direction);
+        }
+    }
 
+    public void moveSnake() {
+        moveHead(snakeDirection);
         for (int i = 1; i < snake.size(); i++) {
             snake.get(i).setPosition(
                 (int) snake.get(i-1).getLastPosition().getX(),
                 (int) snake.get(i-1).getLastPosition().getY()
             );
+            snake.get(i).setDirection(snake.get(i-1).getDirection());
         }
+        for (Snake bodyPart:snake) bodyPart.rotate();
     }
 
     public void increaseSnakeLength() {

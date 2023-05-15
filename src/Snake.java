@@ -7,6 +7,7 @@ public class Snake {
     private final Grid grid;
     private Sprite bodyTexture;
     private Vector2D lastPosition;
+    private Snake.Direction direction;
 
     public Snake(int x, int y, BodyType bodyType) {
         this.grid = new Grid(50, 50);
@@ -34,14 +35,23 @@ public class Snake {
     }
 
     public void Update() {
-        //Nothing yet..
+        
     }
     
     public void setPosition(int x, int y) { 
         lastPosition = new Vector2D(bodyTexture.getPosition().getX(), bodyTexture.getPosition().getY());
         bodyTexture.setPosition(x, y);
     }
+
+    public void rotate() {
+        if (direction == Snake.Direction.LEFT) { bodyTexture.setRotation(Sprite.Rotate.LEFT); Logger.write("Left"); }
+        else if (direction == Snake.Direction.RIGHT) { bodyTexture.setRotation(Sprite.Rotate.RIGHT); Logger.write("Right"); }
+        else if (direction == Snake.Direction.UP) { bodyTexture.setRotation(Sprite.Rotate.UP); Logger.write("Up"); }
+        else if (direction == Snake.Direction.DOWN) { bodyTexture.setRotation(Sprite.Rotate.DOWN); Logger.write("Down"); }
+    }
     
+    public void setDirection(Snake.Direction direction) { this.direction = direction; }
+    public Snake.Direction getDirection() { return direction; }
     public void setBodyType(BodyType bodyType) { this.bodyType = bodyType; }
     public Vector2D getPosition() { return bodyTexture.getPosition(); }
     public Vector2D getLastPosition() { return lastPosition; }
