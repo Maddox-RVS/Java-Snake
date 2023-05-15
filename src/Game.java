@@ -18,15 +18,26 @@ public class Game {
     }
 
     public void Update() {
-        if (keyboard.isKeyDown("left"))
+        if (keyboard.isKeyDown("left")) {
             sprite.setPosition((int) sprite.getPosition().getX() - 6, (int) sprite.getPosition().getY());
-        else if (keyboard.isKeyDown("right"))
+            sprite.setTexture("test2.png");
+            sprite.setRotation(Sprite.Rotate.LEFT);
+        }
+        else if (keyboard.isKeyDown("right")) {
             sprite.setPosition((int) sprite.getPosition().getX() + 6, (int) sprite.getPosition().getY());
-        else sprite.setHeight(100, Sprite.ScaleMode.CENTER);
-        if (keyboard.isKeyDown("up"))
+            sprite.setTexture("test2.png");
+            sprite.setRotation(Sprite.Rotate.RIGHT);
+        }
+        if (keyboard.isKeyDown("up")) {
             sprite.setPosition((int) sprite.getPosition().getX(), (int) sprite.getPosition().getY() - 6);
-        else if (keyboard.isKeyDown("down"))
+            sprite.setTexture("test3.png");
+            sprite.setRotation(Sprite.Rotate.UP);
+        }
+        else if (keyboard.isKeyDown("down")) {
             sprite.setPosition((int) sprite.getPosition().getX(), (int) sprite.getPosition().getY() + 6);
+            sprite.setTexture("test3.png");
+            sprite.setRotation(Sprite.Rotate.DOWN);
+        }
     }
 
     public void Draw() {
