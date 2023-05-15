@@ -13,7 +13,7 @@ public class Game {
         configureWindow(window);
         keyboard = new Keyboard();
         sprite = new Sprite("test2.png", 100, 100, 100, 100);
-        sprite.setRotation(Sprite.Rotate.UP);
+        sprite.setRotation(Sprite.Rotate.DOWN);
         background = new Sprite("Background.png", 750, 750, 0, 0);
     }
 
