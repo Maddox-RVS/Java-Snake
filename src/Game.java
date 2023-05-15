@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
@@ -11,10 +12,11 @@ public class Game {
     private final Keyboard keyboard;
     private Grid grid;
     private final Sprite background;
-    private Snake.Direction snakeDirection;
     private final Timer updateSnakeMovement;
     private int snakeSpeed;
     private ArrayList<Snake> snake = new ArrayList<Snake>();
+    private ArrayList<Snake.Direction> directions = new ArrayList<Snake.Direction>();
+    private Snake.Direction snakeDirection;
     private Food food;
 
     public Game() {
@@ -47,10 +49,36 @@ public class Game {
         checkEatenFood();
         checkCollideWall();
 
-        if (keyboard.wasKeyPressed("left") && snakeDirection != Snake.Direction.RIGHT) snakeDirection = Snake.Direction.LEFT;
-        if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
-        if (keyboard.wasKeyPressed("up") && snakeDirection != Snake.Direction.DOWN) snakeDirection = Snake.Direction.UP;
-        if (keyboard.wasKeyPressed("down") && snakeDirection != Snake.Direction.UP) snakeDirection = Snake.Direction.DOWN;
+        //Sudo code:
+        //[left, up, right, down, left]
+        //dir = left -> [up, right, down, left]
+        //move in direction of dir
+        //loop until -> []
+        //if arr is empty the dir = dir
+        //move in direction of dir
+        //else
+        //read from arr
+
+        if (keyboard.wasKeyPressed("left")) {
+            if (directions.isEmpty()) directions.add(Snake.Direction.LEFT);
+            else if (directions.get(directions.size() - 1) != Snake.Direction.RIGHT)
+                directions.add(Snake.Direction.LEFT);
+        } 
+        if (keyboard.wasKeyPressed("right")) {
+            if (directions.isEmpty()) directions.add(Snake.Direction.RIGHT);
+            else if (directions.get(directions.size() - 1) != Snake.Direction.LEFT)
+                directions.add(Snake.Direction.RIGHT);
+        } 
+        if (keyboard.wasKeyPressed("up")) {
+            if (directions.isEmpty()) directions.add(Snake.Direction.UP);
+            else if (directions.get(directions.size() - 1) != Snake.Direction.DOWN)
+                directions.add(Snake.Direction.UP);
+        } 
+        if (keyboard.wasKeyPressed("down")) {
+            if (directions.isEmpty()) directions.add(Snake.Direction.DOWN);
+            else if (directions.get(directions.size() - 1) != Snake.Direction.UP)
+                directions.add(Snake.Direction.DOWN);
+        }
     }
     
     public void Draw() {
@@ -81,30 +109,52 @@ public class Game {
         food.setPosition((int) foodPosition.getX(), (int) foodPosition.getY());
     }
 
-    public void moveSnake() {
-        if (snakeDirection == Snake.Direction.LEFT) 
+    public void moveHead(Snake.Direction direction) {
+        if (direction == Snake.Direction.LEFT) 
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX() - 50, 
                 (int) snake.get(0).getPosition().getY()); 
-        else if (snakeDirection == Snake.Direction.RIGHT) 
+        else if (direction == Snake.Direction.RIGHT) 
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX() + 50, 
                 (int) snake.get(0).getPosition().getY()); 
-        else if (snakeDirection == Snake.Direction.UP) 
+        else if (direction == Snake.Direction.UP) 
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX(), 
                 (int) snake.get(0).getPosition().getY() - 50); 
-        else if (snakeDirection == Snake.Direction.DOWN) 
+        else if (direction == Snake.Direction.DOWN) 
             snake.get(0).setPosition(
                 (int) snake.get(0).getPosition().getX(), 
                 (int) snake.get(0).getPosition().getY() + 50);
+    }
 
+    public void moveSnake() {
+        Logger.write(directions.toString());
+
+        if (directions.isEmpty());
+        else if (directions.size() == 2) {
+            directions.remove(0);
+            snakeDirection = directions.get(0);
+        }
+        else {
+            snakeDirection = directions.get(0);
+            if (directions.size() != 1) directions.remove(0);
+        }
+        moveHead(snakeDirection);
         for (int i = 1; i < snake.size(); i++) {
             snake.get(i).setPosition(
                 (int) snake.get(i-1).getLastPosition().getX(),
                 (int) snake.get(i-1).getLastPosition().getY()
             );
         }
+        if (!keyboard.isKeyDown("down") &&
+            !keyboard.isKeyDown("left") &&
+            !keyboard.isKeyDown("up") && 
+            !keyboard.isKeyDown("down")) {
+                for (int i = 1; i < directions.size(); i++) {
+                    directions.remove(i);
+                }
+            }
     }
 
     public void increaseSnakeLength() {

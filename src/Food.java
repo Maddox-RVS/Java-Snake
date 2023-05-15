@@ -11,7 +11,7 @@ public class Food {
         grid = new Grid(50, 50);
         x = (int) grid.get(x, y, Translate.FROM_GRID).getX();
         y = (int) grid.get(x, y, Translate.FROM_GRID).getY();
-        foodTexture = new Sprite("Apple.png", 50, 50, x, y);
+        foodTexture = new Sprite("TestApple.png", 50, 50, x, y);
     }
 
     public void setPosition(int x, int y) { 
