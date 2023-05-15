@@ -11,6 +11,7 @@ import Constants.Constants;
 
 public class Sprite {
     private BufferedImage buffImage;
+    private BufferedImage universalBuffImage;
     private JLabel image;
     private int x, y, width, height;
     private String directory;
@@ -41,6 +42,9 @@ public class Sprite {
         directory = dir + "/src/Content/";
         
         loadBufferedImage(imgFileName);
+        universalBuffImage = new BufferedImage(buffImage.getWidth(), buffImage.getHeight(), buffImage.getType());
+        Graphics2D graphics = universalBuffImage.createGraphics();
+        graphics.drawImage(buffImage, null, 0, 0);
         setWidth(width);
         setHeight(height);
         this.image = new JLabel();
@@ -118,27 +122,27 @@ public class Sprite {
     public Rotate getRotation() { return rotation; }
     public void setRotation(Rotate rotation) {
         BufferedImage rotatedImage = new BufferedImage(
-            buffImage.getWidth(), 
-            buffImage.getHeight(), 
-            buffImage.getType());
+            universalBuffImage.getWidth(), 
+            universalBuffImage.getHeight(), 
+            universalBuffImage.getType());
         Graphics2D graphics = rotatedImage.createGraphics();
         if (rotation == Rotate.UP) graphics.rotate(
             Math.toRadians(0), 
-            buffImage.getWidth()/2, 
-            buffImage.getHeight()/2);
+            universalBuffImage.getWidth()/2, 
+            universalBuffImage.getHeight()/2);
         else if (rotation == Rotate.DOWN) graphics.rotate(
             Math.toRadians(180), 
-            buffImage.getWidth()/2, 
-            buffImage.getHeight()/2);
+            universalBuffImage.getWidth()/2, 
+            universalBuffImage.getHeight()/2);
         else if (rotation == Rotate.LEFT) graphics.rotate(
             Math.toRadians(270), 
-            buffImage.getWidth()/2, 
-            buffImage.getHeight()/2);
+            universalBuffImage.getWidth()/2, 
+            universalBuffImage.getHeight()/2);
         else if (rotation == Rotate.RIGHT) graphics.rotate(
             Math.toRadians(90), 
-            buffImage.getWidth()/2, 
-            buffImage.getHeight()/2); 
-        graphics.drawImage(buffImage, null, 0, 0);
+            universalBuffImage.getWidth()/2, 
+            universalBuffImage.getHeight()/2); 
+        graphics.drawImage(universalBuffImage, null, 0, 0);
         graphics.dispose();
         buffImage = rotatedImage;
         this.rotation = rotation;
@@ -155,7 +159,7 @@ public class Sprite {
             g2d.drawImage(image, 0, 0, null);
             g2d.dispose();
         } catch (Exception e) {
-            Logger.write("[ERROR] Failed to load -> " + directory + "/" + imgFileName, e.getMessage(), e);
+            Logger.write("[ERROR] Failed to load -> " + directory + imgFileName, e.getMessage(), e);
         }
     }
 
@@ -163,6 +167,9 @@ public class Sprite {
         loadBufferedImage(imgFileName);
         setWidth(width);
         setHeight(height);
+        Graphics2D graphics = universalBuffImage.createGraphics();
+            graphics.drawImage(buffImage, null, 0, 0);
+            graphics.dispose();
     }
 
     public JLabel get() { 

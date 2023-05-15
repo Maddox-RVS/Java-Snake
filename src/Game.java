@@ -117,7 +117,7 @@ public class Game {
             );
             snake.get(i).setDirection(snake.get(i-1).getDirection());
         }
-        for (Snake bodyPart:snake) bodyPart.rotate();
+        // for (Snake bodyPart:snake) bodyPart.rotate();
     }
 
     public void increaseSnakeLength() {
