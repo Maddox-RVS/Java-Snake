@@ -106,6 +106,9 @@ public class Game {
                 (int) grid.get(x, y, Grid.Translate.TO_GRID).getX(),
                 (int) grid.get(x, y, Grid.Translate.TO_GRID).getY(),
                 Snake.BodyType.LINE_BODY));
+            Logger.write(snake.get(0).getPosition().toString() + "\n" +
+            grid.get((int) snake.get(0).getPosition().getX(), (int) snake.get(0).getPosition().getY(), Grid.Translate.TO_GRID).toString());
+            Logger.write(Integer.toString((int)grid.get(100, 150, Grid.Translate.TO_GRID).getX()));
         }
     }
 

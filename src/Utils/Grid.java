@@ -16,6 +16,7 @@ public class Grid {
 
     public Vector2D get(int x, int y, Translate translation) {
         if (translation == Translate.TO_GRID) {
+            Logger.write("TO GRID");
             return new Vector2D(x - (x%cellWidth), y - (y%cellHeight));
         }
         else {
