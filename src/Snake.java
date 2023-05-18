@@ -17,10 +17,6 @@ public class Snake {
         x = (int) grid.get(x, y, Translate.FROM_GRID).getX();
         y = (int) grid.get(x, y, Translate.FROM_GRID).getY();
         bodyTexture = new Sprite("SnakeHead.png", 50, 50, x, y);
-        
-        if (bodyType == BodyType.LINE_BODY) bodyTexture.setTexture("SnakeLine.png");
-        else if (bodyType == BodyType.CORNER_BODY) bodyTexture.setTexture("SnakeCorner.png");
-        if (bodyType == BodyType.TAIL) bodyTexture.setTexture("SnakeHead.png");
     }
 
     public enum BodyType {
