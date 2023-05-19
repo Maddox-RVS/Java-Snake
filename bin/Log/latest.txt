@@ -4,3 +4,18 @@
 [Init] Initializing runnable action Update and Draw
 [Init] Finished loop initialization
 [Init] Starting loop
+{300.0, 600.0}
+{6.0, 12.0}
+2
+{200.0, 700.0}
+{4.0, 14.0}
+2
+{550.0, 250.0}
+{11.0, 5.0}
+2
+{700.0, 450.0}
+{14.0, 9.0}
+2
+{200.0, 350.0}
+{4.0, 7.0}
+2
