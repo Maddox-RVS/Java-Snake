@@ -7,6 +7,7 @@ public class Game {
     private final Keyboard keyboard;
     private Sprite sprite;
     private Sprite background;
+    private Grid grid;
 
     public Game() {
         window = new Window();
@@ -15,6 +16,7 @@ public class Game {
         sprite = new Sprite("test2.png", 100, 100, 100, 100);
         sprite.setRotation(Sprite.Rotate.DOWN);
         background = new Sprite("Background.png", 750, 750, 0, 0);
+        grid = new Grid(50, 50);
     }
 
     public void Update() {
