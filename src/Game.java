@@ -19,6 +19,7 @@ public class Game {
     private int snakeSpeed;
     private ArrayList<Snake> snake = new ArrayList<Snake>();
     private Food food;
+    private int score;
 
     public Game() {
         window = new Window();
@@ -45,11 +46,10 @@ public class Game {
 
         food = new Food(0, 0);
         placeFood();
+        score = 0;
     }
     
     public void Update() {
-        checkEatenFood();
-
         if (keyboard.wasKeyPressed("left") && 
             !keyboard.isKeyDown("right") &&
             !keyboard.isKeyDown("up") &&
@@ -78,13 +78,19 @@ public class Game {
     
     public void Draw() {
         window.draw();
-        for (Snake bodyPart:snake) window.add(bodyPart.get());
+        for (int i = 0; i < snake.size(); i++) window.add(snake.get(i).get());
         window.add(food.get());
         window.add(background.get(), window.getLayerDepth() + 1);
     }
 
     public void moveSnake() {
         moveHead(snakeDirection);
+        if (snake.size() > 10) {
+            Logger.write(Integer.toString(snake.size()));
+            window.get().getLayeredPane().remove(snake.get(1).get());
+            snake.remove(1);
+        }
+        if (snakeDirection != Snake.Direction.NONE) increaseSnakeLength();
     }
 
     public void checkCollideWall() {
@@ -96,20 +102,13 @@ public class Game {
             endGame();
     }
 
-    public void checkEatenFood() {
+    public boolean checkEatenFood() {
         if (snake.get(0).getPosition().equals(food.getPosition())) {
             placeFood();
-            // increaseSnakeLength();
-            int x = (int) snake.get(0).getPosition().getX();
-            int y = (int) snake.get(0).getPosition().getY();
-            snake.add(new Snake(
-                (int) grid.get(x, y, Grid.Translate.TO_GRID).getX(),
-                (int) grid.get(x, y, Grid.Translate.TO_GRID).getY(),
-                Snake.BodyType.LINE_BODY));
-            Logger.write(snake.get(0).getPosition().toString() + "\n" +
-            grid.get((int) snake.get(0).getPosition().getX(), (int) snake.get(0).getPosition().getY(), Grid.Translate.TO_GRID).toString());
-            Logger.write(Integer.toString((int)grid.get(100, 150, Grid.Translate.TO_GRID).getX()));
+            score++;
+            return true;
         }
+        return false;
     }
 
     public void placeFood() {
@@ -139,9 +138,11 @@ public class Game {
     }
 
     public void increaseSnakeLength() {
+        int x = (int) snake.get(0).getLastPosition().getX();
+        int y = (int) snake.get(0).getLastPosition().getY();
         snake.add(new Snake(
-            (int) snake.get(0).getLastPosition().getX(), 
-            (int) snake.get(0).getLastPosition().getY(), 
+            (int) grid.get(x, y, Grid.Translate.TO_GRID).getX(),
+            (int) grid.get(x, y, Grid.Translate.TO_GRID).getY(),
             Snake.BodyType.LINE_BODY));
     }
     
