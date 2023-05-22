@@ -50,10 +50,30 @@ public class Game {
         checkCollideWall();
         checkCollideSelf();
 
-        if (keyboard.wasKeyPressed("left") && snakeDirection != Snake.Direction.RIGHT) snakeDirection = Snake.Direction.LEFT;
-        else if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
-        else if (keyboard.wasKeyPressed("up") && snakeDirection != Snake.Direction.DOWN) snakeDirection = Snake.Direction.UP;
-        else if (keyboard.wasKeyPressed("down") && snakeDirection != Snake.Direction.UP) snakeDirection = Snake.Direction.DOWN;
+        if (keyboard.wasKeyPressed("left") && 
+            !keyboard.isKeyDown("right") &&
+            !keyboard.isKeyDown("up") &&
+            !keyboard.isKeyDown("down") && 
+            snakeDirection != Snake.Direction.RIGHT) 
+                snakeDirection = Snake.Direction.LEFT;
+        else if (keyboard.wasKeyPressed("right") && 
+            !keyboard.isKeyDown("left") &&
+            !keyboard.isKeyDown("up") &&
+            !keyboard.isKeyDown("down") &&
+            snakeDirection != Snake.Direction.LEFT) 
+                snakeDirection = Snake.Direction.RIGHT;
+        else if (keyboard.wasKeyPressed("up") && 
+            !keyboard.isKeyDown("right") &&
+            !keyboard.isKeyDown("left") &&
+            !keyboard.isKeyDown("down") && 
+            snakeDirection != Snake.Direction.DOWN) 
+                snakeDirection = Snake.Direction.UP;
+        else if (keyboard.wasKeyPressed("down") && 
+            !keyboard.isKeyDown("right") &&
+            !keyboard.isKeyDown("up") &&
+            !keyboard.isKeyDown("left") && 
+            snakeDirection != Snake.Direction.UP) 
+                snakeDirection = Snake.Direction.DOWN;
     }
     
     public void Draw() {
