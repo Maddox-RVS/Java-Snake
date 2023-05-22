@@ -48,6 +48,7 @@ public class Game {
     public void Update() {
         checkEatenFood();
         checkCollideWall();
+        checkCollideSelf();
 
         if (keyboard.wasKeyPressed("left") && snakeDirection != Snake.Direction.RIGHT) snakeDirection = Snake.Direction.LEFT;
         else if (keyboard.wasKeyPressed("right") && snakeDirection != Snake.Direction.LEFT) snakeDirection = Snake.Direction.RIGHT;
@@ -60,6 +61,13 @@ public class Game {
         for (Snake bodyPart:snake) window.add(bodyPart.get());
         window.add(food.get());
         window.add(background.get(), window.getLayerDepth() + 1);
+    }
+
+    public void checkCollideSelf() {
+        for (Snake bodyPart:snake) {
+            if (bodyPart.getPosition().equals(snake.get(0).getPosition()) && bodyPart != snake.get(0))
+                endGame();
+        }
     }
 
     public void checkCollideWall() {

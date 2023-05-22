@@ -10,6 +10,7 @@ public class Snake {
     private Vector2D lastPosition;
     private Snake.Direction direction;
     private Snake.Direction lastDirection;
+    private Rotate rotation;
 
     public Snake(int x, int y, BodyType bodyType) {
         this.grid = new Grid(50, 50);
@@ -21,6 +22,8 @@ public class Snake {
         if (bodyType == BodyType.LINE_BODY) bodyTexture.setTexture("SnakeLine.png");
         else if (bodyType == BodyType.CORNER_BODY) bodyTexture.setTexture("SnakeCorner.png");
         if (bodyType == BodyType.TAIL) bodyTexture.setTexture("SnakeHead.png");
+
+        rotation = Rotate.UP;
     }
 
     public enum BodyType {
@@ -52,6 +55,7 @@ public class Snake {
     public BodyType getBodyType() { return bodyType; }
     public Vector2D getPosition() { return bodyTexture.getPosition(); }
     public Vector2D getLastPosition() { return lastPosition; }
+    public Rotate getRotation() { return rotation; }
     public void setRotation(Rotate rotation) { bodyTexture.setRotation(rotation); }
     public JLabel get() { return bodyTexture.get(); }
 }
