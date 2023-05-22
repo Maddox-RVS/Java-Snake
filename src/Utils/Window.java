@@ -19,7 +19,7 @@ public class Window {
         window.setSize(300, 200);
         window.setLocation(100, 100);
         window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 runWhenClosed.run();

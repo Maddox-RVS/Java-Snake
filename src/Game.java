@@ -220,6 +220,9 @@ public class Game {
         config.setLocation(400, 10);
         config.setVisible(true);
         config.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        config.setRunWhenClosed(() -> {
+            System.out.println("test");
+        });
         config.excludeInsets(true);
         config.configureAllSettings(window);
     }
